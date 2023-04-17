@@ -1,4 +1,4 @@
-package com.example.mvp_noteapp
+package com.example.mvp_noteapp.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
