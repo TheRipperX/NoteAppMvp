@@ -12,8 +12,8 @@ class NoteFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentNoteBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentNoteBinding.inflate(inflater, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = FragmentNoteBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -27,6 +27,8 @@ class NoteFragment : BottomSheetDialogFragment() {
     private fun main() {
 
         binding.apply {
+
+            imgClose.setOnClickListener { this@NoteFragment.dismiss() }
 
         }
     }

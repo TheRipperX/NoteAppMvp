@@ -3,6 +3,7 @@ package com.example.mvp_noteapp.ui.main
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.mvp_noteapp.databinding.ActivityMainBinding
+import com.example.mvp_noteapp.ui.add.NoteFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,6 +20,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun main() {
+
+        binding.apply {
+
+            //floating btn click
+            floatingBtn.setOnClickListener { NoteFragment().show(supportFragmentManager, NoteFragment().tag) }
+        }
 
     }
 }
