@@ -38,10 +38,11 @@
 
         <!--edit text-->
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/edt_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:textColor="@color/black"
             android:ems="10"
             android:hint="@string/title"
             android:inputType="textPersonName"
@@ -72,6 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
+            android:textColor="@color/black"
             android:gravity="top"
             android:hint="@string/description"
             android:inputType="textMultiLine"
