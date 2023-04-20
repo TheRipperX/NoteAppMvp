@@ -10,4 +10,6 @@
     <string name="save">Save</string>
     <string name="categorise">Categorise:</string>
     <string name="priority">Priority:</string>
+    <string name="title_text_user">title text user</string>
+    <string name="description_text_user">description text user</string>
 </resources>

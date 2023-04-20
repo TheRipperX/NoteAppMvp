@@ -13,4 +13,10 @@
     <color name="bg_btn">#4682B4</color>
     <color name="btn_txt_color">#FFFAFA</color>
     <color name="bg_spinner">#00FFFF</color>
+
+<!--    color bg item adapter-->
+    <color name="high">#CD5C5C</color>
+    <color name="normal">#FFFF00</color>
+    <color name="low">#DDA0DD</color>
+
 </resources>

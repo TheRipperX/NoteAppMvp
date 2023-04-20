@@ -1,5 +1,6 @@
 package com.example.mvp_noteapp.ui.add
 
+import android.util.Log
 import com.example.mvp_noteapp.base.BasePresenterImpl
 import com.example.mvp_noteapp.data.model.NoteEntity
 import com.example.mvp_noteapp.data.repository.add.AddNoteRepository
