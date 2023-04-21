@@ -1,6 +1,7 @@
 package com.example.mvp_noteapp.utils
 
 import androidx.recyclerview.widget.DiffUtil
+import androidx.room.Delete
 
 //database note table and name
 const val NOTE_TABLE = "note_table"
@@ -19,6 +20,11 @@ const val HEALTHY = "healthy"
 const val HIGH = "high"
 const val NORMAL = "normal"
 const val LOW = "low"
+
+//menu adapter items
+const val EDIT = "edit"
+const val DELETE = "delete"
+
 
 // differ adapter diffutils
 class DiffutilsAdapter(private val old: List<*>, private val new: List<*>): DiffUtil.Callback() {

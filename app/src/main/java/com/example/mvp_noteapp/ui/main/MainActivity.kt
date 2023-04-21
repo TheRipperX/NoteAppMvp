@@ -3,11 +3,14 @@ package com.example.mvp_noteapp.ui.main
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.mvp_noteapp.data.model.NoteEntity
 import com.example.mvp_noteapp.data.repository.main.MainRepository
 import com.example.mvp_noteapp.databinding.ActivityMainBinding
 import com.example.mvp_noteapp.ui.add.NoteFragment
+import com.example.mvp_noteapp.utils.DELETE
+import com.example.mvp_noteapp.utils.EDIT
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -49,6 +52,21 @@ class MainActivity : AppCompatActivity(), MainContracts.View {
 
         // show all data database
         mainPresenter.showAllNotes()
+
+        //menu popup click
+        mainNoteAdapters.setClick { noteEntity, s ->
+
+            when(s) {
+                EDIT -> {
+                    Toast.makeText(this, "edit: $noteEntity", Toast.LENGTH_SHORT).show()
+                }
+
+                DELETE -> {
+                    Toast.makeText(this, "delete: $noteEntity", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        }
 
     }
 
