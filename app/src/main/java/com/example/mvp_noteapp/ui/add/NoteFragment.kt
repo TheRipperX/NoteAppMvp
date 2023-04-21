@@ -1,7 +1,6 @@
 package com.example.mvp_noteapp.ui.add
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +30,11 @@ class NoteFragment : BottomSheetDialogFragment(), NoteContracts.View {
     lateinit var noteEntity: NoteEntity
 
     //note presenter
-    private val presenter: NotePresenter by lazy { NotePresenter(addNoteRepository, this) }
+    @Inject
+    lateinit var notePresenter: NotePresenter
+
+    //note presenter
+    //private val presenter: NotePresenter by lazy { NotePresenter(addNoteRepository, this) }
 
     // category items
     private lateinit var categoryList: MutableList<String>
@@ -79,7 +82,7 @@ class NoteFragment : BottomSheetDialogFragment(), NoteContracts.View {
                 noteEntity.priority = priority
 
                 //save note database
-                presenter.saveNoteApp(noteEntity)
+                notePresenter.saveNoteApp(noteEntity)
             }
 
         }
@@ -135,6 +138,6 @@ class NoteFragment : BottomSheetDialogFragment(), NoteContracts.View {
 
     override fun onStop() {
         super.onStop()
-        presenter.onStopApp()
+        notePresenter.onStopApp()
     }
 }

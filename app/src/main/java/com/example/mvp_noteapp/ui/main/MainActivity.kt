@@ -2,7 +2,6 @@ package com.example.mvp_noteapp.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.mvp_noteapp.data.model.NoteEntity
@@ -25,8 +24,12 @@ class MainActivity : AppCompatActivity(), MainContracts.View {
     @Inject
     lateinit var mainNoteAdapters: MainNoteAdapters
 
+    //note fragment
+    @Inject
+    lateinit var mainPresenter: MainPresenter
+
     //presenter
-    private val mainPresenter:MainPresenter by lazy { MainPresenter(mainRepository, this) }
+    //private val mainPresenter:MainPresenter by lazy { MainPresenter(mainRepository, this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +47,7 @@ class MainActivity : AppCompatActivity(), MainContracts.View {
             floatingBtn.setOnClickListener { NoteFragment().show(supportFragmentManager, NoteFragment().tag) }
         }
 
+        // show all data database
         mainPresenter.showAllNotes()
 
     }

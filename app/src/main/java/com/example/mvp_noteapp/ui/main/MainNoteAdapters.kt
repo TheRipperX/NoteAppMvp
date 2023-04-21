@@ -1,6 +1,5 @@
 package com.example.mvp_noteapp.ui.main
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,10 +8,9 @@ import com.example.mvp_noteapp.R
 import com.example.mvp_noteapp.data.model.NoteEntity
 import com.example.mvp_noteapp.databinding.MainLayoutAdapterBinding
 import com.example.mvp_noteapp.utils.*
-import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class MainNoteAdapters @Inject constructor(@ApplicationContext context: Context): RecyclerView.Adapter<MainNoteAdapters.MainViewHolder>() {
+class MainNoteAdapters @Inject constructor(): RecyclerView.Adapter<MainNoteAdapters.MainViewHolder>() {
 
     private lateinit var binding: MainLayoutAdapterBinding
     private var emptyNote = listOf<NoteEntity>()
