@@ -14,4 +14,11 @@
     <string name="description_text_user">description text user</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="healthy">HEALTHY</string>
+    <string name="learning">LERNING</string>
+    <string name="work">WORK</string>
+    <string name="home">HOME</string>
+    <string name="high">HIGH</string>
+    <string name="low">LOW</string>
+    <string name="normal">NORMAL</string>
 </resources>

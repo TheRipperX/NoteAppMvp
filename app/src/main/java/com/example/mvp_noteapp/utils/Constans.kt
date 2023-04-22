@@ -24,6 +24,10 @@ const val LOW = "low"
 //menu adapter items
 const val EDIT = "edit"
 const val DELETE = "delete"
+const val NEW = "new"
+
+//bundle fragment
+const val BUNDLE_ID = "bundle_id"
 
 
 // differ adapter diffutils

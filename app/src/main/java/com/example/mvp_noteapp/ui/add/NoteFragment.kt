@@ -1,6 +1,7 @@
 package com.example.mvp_noteapp.ui.add
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,6 +45,10 @@ class NoteFragment : BottomSheetDialogFragment(), NoteContracts.View {
     private lateinit var priorityList: MutableList<String>
     private var priority = ""
 
+    // edit database method
+    private var noteId = 0
+    private var type = ""
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentNoteBinding.inflate(layoutInflater)
         return binding.root
@@ -57,6 +62,16 @@ class NoteFragment : BottomSheetDialogFragment(), NoteContracts.View {
     }
 
     private fun main() {
+
+        //note id to arguments
+        noteId = arguments?.getInt(BUNDLE_ID) ?: 0
+
+        // if edit or add note
+        type = if (noteId > 0) EDIT else NEW
+
+        if (type == EDIT){
+            notePresenter.getNote(noteId)
+        }
 
         binding.apply {
 
@@ -75,14 +90,19 @@ class NoteFragment : BottomSheetDialogFragment(), NoteContracts.View {
                 }
 
                 // set data note
-                noteEntity.id = 0
+                //noteEntity.id = 0
+                noteEntity.id = noteId
                 noteEntity.title = title
                 noteEntity.desc = dec
                 noteEntity.category = category
                 noteEntity.priority = priority
 
-                //save note database
-                notePresenter.saveNoteApp(noteEntity)
+                //save and edit note database
+
+                if (type == EDIT)
+                    notePresenter.updateNote(noteEntity)
+                else
+                    notePresenter.saveNoteApp(noteEntity)
             }
 
         }
@@ -132,8 +152,34 @@ class NoteFragment : BottomSheetDialogFragment(), NoteContracts.View {
 
     }
 
+    private fun getSpinnerItems(list: MutableList<String>, item: String): Int {
+        var index = 0
+        for (i in list.indices){
+            if (list[i] == item){
+                index = i
+                break
+            }
+        }
+        return index
+    }
+
     override fun close() {
         this.dismiss()
+    }
+
+    override fun loadNote(n: NoteEntity) {
+        if (this.isAdded){
+            requireActivity().runOnUiThread {
+                binding.apply {
+
+                    edtTitle.setText(n.title)
+                    edtDec.setText(n.desc)
+                    spinnerCategorise.setSelection(getSpinnerItems(categoryList, n.category))
+                    spinnerPriority.setSelection(getSpinnerItems(priorityList, n.priority))
+
+                }
+            }
+        }
     }
 
     override fun onStop() {

@@ -2,6 +2,7 @@ package com.example.mvp_noteapp.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -9,8 +10,10 @@ import com.example.mvp_noteapp.data.model.NoteEntity
 import com.example.mvp_noteapp.data.repository.main.MainRepository
 import com.example.mvp_noteapp.databinding.ActivityMainBinding
 import com.example.mvp_noteapp.ui.add.NoteFragment
+import com.example.mvp_noteapp.utils.BUNDLE_ID
 import com.example.mvp_noteapp.utils.DELETE
 import com.example.mvp_noteapp.utils.EDIT
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -57,12 +60,18 @@ class MainActivity : AppCompatActivity(), MainContracts.View {
         mainNoteAdapters.setClick { noteEntity, s ->
 
             when(s) {
+
                 EDIT -> {
-                    Toast.makeText(this, "edit: $noteEntity", Toast.LENGTH_SHORT).show()
+
+                    val fragment = NoteFragment()
+                    val bundle = Bundle()
+                    bundle.putInt(BUNDLE_ID, noteEntity.id)
+                    fragment.arguments = bundle
+                    fragment.show(supportFragmentManager, fragment.tag)
                 }
 
                 DELETE -> {
-                    Toast.makeText(this, "delete: $noteEntity", Toast.LENGTH_SHORT).show()
+                    mainPresenter.deleteNote(noteEntity)
                 }
             }
 
@@ -90,7 +99,6 @@ class MainActivity : AppCompatActivity(), MainContracts.View {
                 layoutManager = StaggeredGridLayoutManager( 2, StaggeredGridLayoutManager.VERTICAL)
                 adapter = mainNoteAdapters
             }
-
         }
     }
 
@@ -99,5 +107,9 @@ class MainActivity : AppCompatActivity(), MainContracts.View {
             emptyLayout.visibility = View.VISIBLE
             listMain.visibility = View.GONE
         }
+    }
+
+    override fun deleteNoteSuccess() {
+        Snackbar.make(binding.root, "delete note success", Snackbar.LENGTH_SHORT).show()
     }
 }

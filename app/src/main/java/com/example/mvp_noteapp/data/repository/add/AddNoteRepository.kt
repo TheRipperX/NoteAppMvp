@@ -8,5 +8,7 @@ import javax.inject.Inject
 class AddNoteRepository @Inject constructor(private val dao: NoteDao){
 
     fun saveNote(noteEntity: NoteEntity) = dao.saveNote(noteEntity)
+    fun getNote(id: Int) = dao.getNote(id)
+    fun updateNote(noteEntity: NoteEntity) = dao.updateNote(noteEntity)
 
 }
