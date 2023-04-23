@@ -20,6 +20,7 @@ const val HEALTHY = "healthy"
 const val HIGH = "high"
 const val NORMAL = "normal"
 const val LOW = "low"
+const val ALL = "all"
 
 //menu adapter items
 const val EDIT = "edit"

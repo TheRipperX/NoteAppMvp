@@ -2,17 +2,15 @@ package com.example.mvp_noteapp.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.mvp_noteapp.R
 import com.example.mvp_noteapp.data.model.NoteEntity
 import com.example.mvp_noteapp.data.repository.main.MainRepository
 import com.example.mvp_noteapp.databinding.ActivityMainBinding
 import com.example.mvp_noteapp.ui.add.NoteFragment
-import com.example.mvp_noteapp.utils.BUNDLE_ID
-import com.example.mvp_noteapp.utils.DELETE
-import com.example.mvp_noteapp.utils.EDIT
+import com.example.mvp_noteapp.utils.*
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -34,6 +32,9 @@ class MainActivity : AppCompatActivity(), MainContracts.View {
     @Inject
     lateinit var mainPresenter: MainPresenter
 
+    // filter note priority items
+    private var priorityItem = 0
+
     //presenter
     //private val mainPresenter:MainPresenter by lazy { MainPresenter(mainRepository, this) }
 
@@ -51,6 +52,17 @@ class MainActivity : AppCompatActivity(), MainContracts.View {
 
             //floating btn click
             floatingBtn.setOnClickListener { NoteFragment().show(supportFragmentManager, NoteFragment().tag) }
+
+            toolbarMain.setOnMenuItemClickListener {
+                when(it.itemId) {
+                    R.id.menu_toolbar_filter -> {
+                        filterNoteAlert()
+                        return@setOnMenuItemClickListener true
+                    }
+                    else -> {return@setOnMenuItemClickListener  false}
+                }
+            }
+
         }
 
         // show all data database
@@ -68,6 +80,7 @@ class MainActivity : AppCompatActivity(), MainContracts.View {
                     bundle.putInt(BUNDLE_ID, noteEntity.id)
                     fragment.arguments = bundle
                     fragment.show(supportFragmentManager, fragment.tag)
+                    priorityItem = 0
                 }
 
                 DELETE -> {
@@ -85,7 +98,7 @@ class MainActivity : AppCompatActivity(), MainContracts.View {
     }
 
     override fun showData(notes: List<NoteEntity>) {
-
+        priorityItem = 0
         binding.apply {
 
             emptyLayout.visibility = View.GONE
@@ -110,6 +123,30 @@ class MainActivity : AppCompatActivity(), MainContracts.View {
     }
 
     override fun deleteNoteSuccess() {
+        priorityItem = 0
         Snackbar.make(binding.root, "delete note success", Snackbar.LENGTH_SHORT).show()
+    }
+
+    //filter note alert dialog fun
+    private fun filterNoteAlert() {
+
+        val build = AlertDialog.Builder(this)
+
+        val itemDialog = arrayOf(ALL, HIGH, NORMAL, LOW)
+
+        build.setSingleChoiceItems(itemDialog, priorityItem) {d, i ->
+
+            when(i){
+
+                0 -> {mainPresenter.showAllNotes()}
+
+                in 1..itemDialog.size -> {mainPresenter.filterNote(itemDialog[i])}
+            }
+            priorityItem = i
+            d.dismiss()
+        }
+
+        build.create()
+        build.show()
     }
 }

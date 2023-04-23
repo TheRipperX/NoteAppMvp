@@ -16,12 +16,11 @@ class MainPresenter @Inject constructor(private val repository: MainRepository, 
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                if (it.isNotEmpty()) {
+                if (it.isNotEmpty())
                     view.showData(it)
-                }
-                else {
+                else
                     view.emptyList()
-                }
+
             }
     }
 
@@ -32,6 +31,18 @@ class MainPresenter @Inject constructor(private val repository: MainRepository, 
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 view.deleteNoteSuccess()
+            }
+    }
+
+    override fun filterNote(priority: String) {
+        disposable = repository.filterNote(priority)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                if (it.isNotEmpty())
+                    view.showData(it)
+                else
+                    view.emptyList()
             }
     }
 
