@@ -14,5 +14,6 @@ interface MainContracts {
         fun showAllNotes()
         fun deleteNote(noteEntity: NoteEntity)
         fun filterNote(priority: String)
+        fun searchNote(title: String)
     }
 }

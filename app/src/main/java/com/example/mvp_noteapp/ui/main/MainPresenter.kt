@@ -46,4 +46,17 @@ class MainPresenter @Inject constructor(private val repository: MainRepository, 
             }
     }
 
+    override fun searchNote(title: String) {
+
+        disposable = repository.searchNote(title)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                if (it.isNotEmpty())
+                    view.showData(it)
+                else
+                    view.emptyList()
+
+            }
+    }
 }

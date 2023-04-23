@@ -1,9 +1,12 @@
 package com.example.mvp_noteapp.ui.main
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.mvp_noteapp.R
 import com.example.mvp_noteapp.data.model.NoteEntity
@@ -50,6 +53,9 @@ class MainActivity : AppCompatActivity(), MainContracts.View {
 
         binding.apply {
 
+            //set toolbar to android
+            setSupportActionBar(toolbarMain)
+
             //floating btn click
             floatingBtn.setOnClickListener { NoteFragment().show(supportFragmentManager, NoteFragment().tag) }
 
@@ -62,17 +68,12 @@ class MainActivity : AppCompatActivity(), MainContracts.View {
                     else -> {return@setOnMenuItemClickListener  false}
                 }
             }
-
         }
-
         // show all data database
         mainPresenter.showAllNotes()
-
         //menu popup click
         mainNoteAdapters.setClick { noteEntity, s ->
-
             when(s) {
-
                 EDIT -> {
 
                     val fragment = NoteFragment()
@@ -82,14 +83,38 @@ class MainActivity : AppCompatActivity(), MainContracts.View {
                     fragment.show(supportFragmentManager, fragment.tag)
                     priorityItem = 0
                 }
-
                 DELETE -> {
                     mainPresenter.deleteNote(noteEntity)
                 }
             }
-
         }
+    }
 
+    //menu item android to search toolbar menu
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+
+        menuInflater.inflate(R.menu.menu_toolbar, menu)
+        val searchMenu = menu.findItem(R.id.menu_toolbar_search)
+
+        val searchView = searchMenu.actionView as SearchView
+        searchView.queryHint = "Search..."
+
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let {
+                    mainPresenter.searchNote(it)
+                }
+
+                return true
+            }
+
+        })
+
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onStop() {
